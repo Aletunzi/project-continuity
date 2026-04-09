@@ -866,14 +866,14 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
             name: "Personal Project",
             description: "Your personal project workspace.",
             updatedAt: "Updated 37 minutes ago",
-          }].filter(p => p.name.toLowerCase().includes(projectSearchQuery.toLowerCase())))}
-          {projectSubTab === "team" && renderProjectCards(projectSearchFiltered)}
+          }].filter(p => p.name.toLowerCase().includes(projectSearchQuery.toLowerCase())), "your")}
+          {projectSubTab === "team" && renderProjectCards(projectSearchFiltered, "team")}
           {projectSubTab === "shared" && renderProjectCards([{
             id: 98,
             name: "Project shared with me",
             description: "A project shared with you by a team member.",
             updatedAt: "Updated 22 hours ago",
-          }].filter(p => p.name.toLowerCase().includes(projectSearchQuery.toLowerCase())))}
+          }].filter(p => p.name.toLowerCase().includes(projectSearchQuery.toLowerCase())), "shared")}
         </>
       ) : (
         <>
