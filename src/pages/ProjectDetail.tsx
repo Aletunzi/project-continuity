@@ -348,7 +348,7 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
               {getProjectIcon(id || "", 28, "text-foreground")}
               <h1 className="text-2xl font-normal text-foreground">{project.name}</h1>
             </div>
-            {!hideSettings && (
+            {!hideSettings && !isSharedInNextVersion && (
               <button
                 onClick={() => setSettingsOpen(true)}
                 className="px-4 py-2 rounded-lg border border-border text-sm text-foreground hover:bg-accent transition-colors"
