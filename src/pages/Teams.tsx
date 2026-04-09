@@ -1070,8 +1070,8 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
                       </button>
                     ))}
                   </div>
-                  {chatSubTab === "team" && (
-                    <button className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors">
+                  {chatSubTab !== "shared" && (
+                    <button className="flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-border bg-background text-sm text-foreground hover:bg-accent transition-colors">
                       <Plus size={16} />
                       New chat
                     </button>
