@@ -157,6 +157,12 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
   const totalCost = standardCost + premiumCost;
   const belowMinimum = totalAdjusted < minSeats;
 
+  const projectSearchFiltered = teamsData.filter(
+    (team) =>
+      team.name.toLowerCase().includes((showProjectSubTabs ? projectSearchQuery : searchQuery).toLowerCase()) ||
+      team.description.toLowerCase().includes((showProjectSubTabs ? projectSearchQuery : searchQuery).toLowerCase())
+  );
+
   const filteredTeams = teamsData.filter(
     (team) =>
       team.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
