@@ -846,7 +846,7 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
 
           {/* Sub-tabs */}
           <div className="flex items-center gap-2 mb-5">
-            {([["your", "Your project"], ["team", "Team"], ["shared", "Shared with you"]] as const).map(([key, label]) => (
+            {([["your", "Your projects"], ["team", "Team"], ["shared", "Shared with you"]] as const).map(([key, label]) => (
               <button
                 key={key}
                 onClick={() => setProjectSubTab(key as any)}
@@ -915,7 +915,7 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
         <div className="px-6 pb-3 ml-2">
           <div className="flex items-center gap-2 text-sm text-foreground">
             <button onClick={() => setActiveTeamChat(null)} className="text-muted-foreground hover:text-foreground hover:underline transition-colors">
-              Team
+              {showProjectSubTabs ? "Chats" : "Team"}
             </button>
             <span className="text-muted-foreground">/</span>
             <span className="truncate max-w-[200px]">{activeTeamChat.title}</span>

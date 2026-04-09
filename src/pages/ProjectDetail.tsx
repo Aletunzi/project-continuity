@@ -93,7 +93,7 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
   const fromTab = searchParams.get("from");
   const project = projectsData[id || ""] || { name: "Project", description: "", chats: [] };
 
-  const fromLabel = fromTab === "your" ? "Your project" : fromTab === "shared" ? "Shared with you" : fromTab === "team" ? "Team" : null;
+  const fromLabel = fromTab === "your" ? "Your projects" : fromTab === "shared" ? "Shared with you" : fromTab === "team" ? "Team" : null;
 
   const [inputValue, setInputValue] = useState("");
   const [activeChat, setActiveChat] = useState<Chat | null>(null);
@@ -203,7 +203,7 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
         <div className="px-6 pb-3 ml-2">
           <div className="flex items-center gap-2 text-sm text-foreground">
             <button onClick={() => { setActiveChat(null); navigate(`${basePath}/teams`); }} className="text-muted-foreground hover:text-foreground hover:underline transition-colors">
-              Team
+              Projects
             </button>
             {fromLabel && (
               <>
@@ -322,7 +322,7 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
       <div className="px-6 pb-3 ml-2">
         <div className="flex items-center gap-2 text-sm text-foreground">
           <button onClick={() => navigate(`${basePath}/teams`)} className="text-muted-foreground hover:text-foreground hover:underline transition-colors">
-            Team
+            Projects
           </button>
           {fromLabel && (
             <>
