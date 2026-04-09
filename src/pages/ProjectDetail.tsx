@@ -95,7 +95,7 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
 
   const isSharedInNextVersion = basePath === "/team-feature-next-version" && id === "98";
 
-  const fromLabel = fromTab === "your" ? "Your projects" : fromTab === "shared" ? "Shared with you" : fromTab === "team" ? "Team" : null;
+  const fromLabel = fromTab === "your" ? "Your projects" : fromTab === "shared" ? "Shared with you" : fromTab === "team" ? "Team projects" : null;
 
   const [inputValue, setInputValue] = useState("");
   const [activeChat, setActiveChat] = useState<Chat | null>(null);
