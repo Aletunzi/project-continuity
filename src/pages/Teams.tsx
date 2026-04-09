@@ -1089,15 +1089,17 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
 
                   return (
                     <div>
-                      {/* New chat input */}
-                      <div className="flex items-center gap-2 border border-border rounded-full px-5 py-3 bg-background mb-8">
-                        <Plus size={18} className="text-muted-foreground" />
-                        <span className="flex-1 text-sm text-muted-foreground">Type a message...</span>
-                        <button className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-muted text-sm text-foreground hover:bg-accent transition-colors">
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 10v3"/><path d="M6 6v11"/><path d="M10 3v18"/><path d="M14 8v7"/><path d="M18 5v13"/><path d="M22 10v3"/></svg>
-                          Voice
-                        </button>
-                      </div>
+                      {/* New chat input - hidden for shared */}
+                      {chatSubTab !== "shared" && (
+                        <div className="flex items-center gap-2 border border-border rounded-full px-5 py-3 bg-background mb-8">
+                          <Plus size={18} className="text-muted-foreground" />
+                          <span className="flex-1 text-sm text-muted-foreground">Type a message...</span>
+                          <button className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-muted text-sm text-foreground hover:bg-accent transition-colors">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 10v3"/><path d="M6 6v11"/><path d="M10 3v18"/><path d="M14 8v7"/><path d="M18 5v13"/><path d="M22 10v3"/></svg>
+                            Voice
+                          </button>
+                        </div>
+                      )}
 
                       {chatItems.map((chat) => (
                         <div key={chat.title} className="relative flex items-center justify-between py-5 cursor-pointer hover:bg-accent/30 transition-colors -mx-2 px-2 rounded-md" onClick={() => setActiveTeamChat({ title: chat.title, messages: [{ role: "user", content: chat.title }, { role: "assistant", content: "Hi! How can I help you with this?" }], avatars: chat.avatars })}>
