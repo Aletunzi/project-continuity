@@ -915,7 +915,7 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
         <div className="px-6 pb-3 ml-2">
           <div className="flex items-center gap-2 text-sm text-foreground">
             <button onClick={() => setActiveTeamChat(null)} className="text-muted-foreground hover:text-foreground hover:underline transition-colors">
-              Team
+              {showProjectSubTabs ? "Chats" : "Team"}
             </button>
             <span className="text-muted-foreground">/</span>
             <span className="truncate max-w-[200px]">{activeTeamChat.title}</span>
