@@ -19,7 +19,7 @@ const MemberView = () => {
 
   return (
     <div className="flex h-screen bg-background">
-      <Sidebar showInvite={false} showOrg={false} basePath={BASE_PATH} />
+      <Sidebar showInvite={false} showOrg={false} hideNewProject basePath={BASE_PATH} />
       {renderContent()}
     </div>
   );

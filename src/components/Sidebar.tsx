@@ -17,6 +17,7 @@ interface SidebarProps {
   showOrg?: boolean;
   basePath?: string;
   hideTeamSections?: boolean;
+  hideNewProject?: boolean;
   onTeamClick?: () => void;
 }
 
@@ -34,7 +35,7 @@ const recentChats = [
 const roles = ["User", "Admin"] as const;
 const tiers = ["Standard", "Pro"] as const;
 
-const Sidebar = ({ showTeams = true, showInvite = true, showOrg = true, basePath = "/team-feature", hideTeamSections = false, onTeamClick }: SidebarProps) => {
+const Sidebar = ({ showTeams = true, showInvite = true, showOrg = true, basePath = "/team-feature", hideTeamSections = false, hideNewProject = false, onTeamClick }: SidebarProps) => {
   const teamNavPath = `${basePath}/teams`;
   const navItems = showTeams ? [...baseNavItems, { icon: Users, label: "Team", path: teamNavPath }] : baseNavItems;
   const navigate = useNavigate();
@@ -91,13 +92,15 @@ const Sidebar = ({ showTeams = true, showInvite = true, showOrg = true, basePath
           {!hideTeamSections && (
             <>
               <p className="text-xs text-muted-foreground px-3 mb-2">Team projects</p>
-              <button
-                onClick={() => navigate(basePath)}
-                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-sidebar-text hover:bg-accent transition-colors w-full"
-              >
-                <SquarePlus size={18} />
-                <span>New project</span>
-              </button>
+              {!hideNewProject && (
+                <button
+                  onClick={() => navigate(basePath)}
+                  className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-sidebar-text hover:bg-accent transition-colors w-full"
+                >
+                  <SquarePlus size={18} />
+                  <span>New project</span>
+                </button>
+              )}
               {projects.map((proj) => (
                 <div key={proj.id}>
                   <button
