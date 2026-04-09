@@ -43,7 +43,7 @@ const projectsData: Record<string, { name: string; description: string; chats: C
 type Message = { role: "user" | "assistant"; content: string };
 type Chat = { name: string; messages: Message[]; participants: ChatParticipant[] };
 
-const ProjectDetail = ({ basePath = "/team-feature" }: { basePath?: string }) => {
+const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false }: { basePath?: string; hideSettings?: boolean }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const project = projectsData[id || ""] || { name: "Project", description: "", chats: [] };
@@ -279,12 +279,14 @@ const ProjectDetail = ({ basePath = "/team-feature" }: { basePath?: string }) =>
               <SharedFolderIcon size={28} className="text-foreground" />
               <h1 className="text-2xl font-normal text-foreground">{project.name}</h1>
             </div>
-            <button
-              onClick={() => setSettingsOpen(true)}
-              className="px-4 py-2 rounded-lg border border-border text-sm text-foreground hover:bg-accent transition-colors"
-            >
-              Project Settings
-            </button>
+            {!hideSettings && (
+              <button
+                onClick={() => setSettingsOpen(true)}
+                className="px-4 py-2 rounded-lg border border-border text-sm text-foreground hover:bg-accent transition-colors"
+              >
+                Project Settings
+              </button>
+            )}
           </div>
 
           {/* Chat input */}
