@@ -1026,80 +1026,197 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
         {activeFilter === "projects" && renderProjectsView()}
         {activeFilter === "chats" && (
           <div className="max-w-3xl">
-            {/* New chat input */}
-            <div className="flex items-center gap-2 border border-border rounded-full px-5 py-3 bg-background mb-8">
-              <Plus size={18} className="text-muted-foreground" />
-              <span className="flex-1 text-sm text-muted-foreground">Type a message...</span>
-               <button className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-muted text-sm text-foreground hover:bg-accent transition-colors">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 10v3"/><path d="M6 6v11"/><path d="M10 3v18"/><path d="M14 8v7"/><path d="M18 5v13"/><path d="M22 10v3"/></svg>
-                Voice
-              </button>
-            </div>
+            {showProjectSubTabs ? (
+              <>
+                {/* Chat search bar */}
+                <div className="flex items-center gap-2 border border-border rounded-lg px-4 py-3 bg-background mb-6">
+                  <Search size={16} className="text-muted-foreground" />
+                  <input
+                    type="text"
+                    value={chatSearchQuery}
+                    onChange={(e) => setChatSearchQuery(e.target.value)}
+                    placeholder="Search chats..."
+                    className="flex-1 bg-transparent outline-none text-sm text-foreground placeholder:text-muted-foreground"
+                  />
+                  {chatSearchQuery && (
+                    <button onClick={() => setChatSearchQuery("")} className="text-muted-foreground hover:text-foreground">
+                      <X size={14} />
+                    </button>
+                  )}
+                </div>
 
-            {hideProjects ? (
-              <div className="text-center py-16 text-muted-foreground text-sm">
-                No chats yet. Start a conversation to get going.
-              </div>
-            ) : (
-              <div>
-                {[
-                  { title: "Q4 Strategy alignment", subtitle: "Hi! How can I help you with this?", date: "Apr 5", avatars: [
-                    { initials: "AT", bg: "bg-amber-700", name: "Alessandro Tunzi", email: "alessandro@rubylabs.com" },
-                    { initials: "R", bg: "bg-green-600", name: "Paolo Rossi", email: "paolo@rubylabs.com" },
-                  ] },
-                  { title: "Claude settings help", subtitle: "Hi! How can I help you with this?", date: "Apr 3", avatars: [
-                    { initials: "AT", bg: "bg-amber-700", name: "Alessandro Tunzi", email: "alessandro@rubylabs.com" },
-                  ] },
-                  { title: "Design system updates", subtitle: "Hi! How can I help you with this?", date: "Mar 28", avatars: [
-                    { initials: "AT", bg: "bg-amber-700", name: "Alessandro Tunzi", email: "alessandro@rubylabs.com" },
-                    { initials: "T", bg: "bg-green-600", name: "Alessandro Tunzi", email: "alessandro@rubylabs.com" },
-                    { initials: "R", bg: "bg-blue-500", name: "Paolo Rossi", email: "paolo@rubylabs.com" },
-                  ] },
-                ].map((chat) => (
-                  <div key={chat.title} className="relative flex items-center justify-between py-5 cursor-pointer hover:bg-accent/30 transition-colors -mx-2 px-2 rounded-md" onClick={() => setActiveTeamChat({ title: chat.title, messages: [{ role: "user", content: chat.title }, { role: "assistant", content: "Hi! How can I help you with this?" }], avatars: chat.avatars })}>
+                {/* Sub-tabs */}
+                <div className="flex items-center gap-2 mb-5">
+                  {([["your", "Your chats"], ["team", "Team chats"], ["shared", "Shared with you"]] as const).map(([key, label]) => (
+                    <button
+                      key={key}
+                      onClick={() => setChatSubTab(key as any)}
+                      className={`px-4 py-1.5 rounded-lg text-sm transition-colors ${
+                        chatSubTab === key
+                          ? "bg-accent text-foreground font-normal"
+                          : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Chat list per sub-tab */}
+                {(() => {
+                  const chatItems = [
+                    { title: "Q4 Strategy alignment", subtitle: "Hi! How can I help you with this?", date: "Apr 5", avatars: [
+                      { initials: "AT", bg: "bg-amber-700", name: "Alessandro Tunzi", email: "alessandro@rubylabs.com" },
+                      { initials: "R", bg: "bg-green-600", name: "Paolo Rossi", email: "paolo@rubylabs.com" },
+                    ] },
+                    { title: "Claude settings help", subtitle: "Hi! How can I help you with this?", date: "Apr 3", avatars: [
+                      { initials: "AT", bg: "bg-amber-700", name: "Alessandro Tunzi", email: "alessandro@rubylabs.com" },
+                    ] },
+                    { title: "Design system updates", subtitle: "Hi! How can I help you with this?", date: "Mar 28", avatars: [
+                      { initials: "AT", bg: "bg-amber-700", name: "Alessandro Tunzi", email: "alessandro@rubylabs.com" },
+                      { initials: "T", bg: "bg-green-600", name: "Alessandro Tunzi", email: "alessandro@rubylabs.com" },
+                      { initials: "R", bg: "bg-blue-500", name: "Paolo Rossi", email: "paolo@rubylabs.com" },
+                    ] },
+                  ].filter(c => c.title.toLowerCase().includes(chatSearchQuery.toLowerCase()));
+
+                  return (
                     <div>
-                      <h3 className="text-sm font-medium text-foreground">{chat.title}</h3>
-                      <p className="text-sm text-muted-foreground mt-0.5">{chat.subtitle}</p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="flex" style={{ gap: "-14px" }}>
-                        {chat.avatars.map((av, i) => (
-                          <div key={i} className={`w-8 h-8 rounded-full ${av.bg} flex items-center justify-center text-[11px] font-medium text-white ring-2 ring-background group/avatar relative`} style={{ marginLeft: i > 0 ? '-13px' : '0', zIndex: chat.avatars.length - i }}>
-                            {av.initials}
-                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 rounded-lg bg-foreground text-background text-xs whitespace-nowrap opacity-0 invisible group-hover/avatar:opacity-100 group-hover/avatar:visible transition-all pointer-events-none z-50 text-center shadow-lg">
-                              <div className="font-normal">{av.name}</div>
-                              <div className="text-background/70">{av.email}</div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      <span className="text-sm text-muted-foreground whitespace-nowrap">{chat.date}</span>
-                      {!hideTeamChatActions && (
-                        <button
-                          onClick={(e) => { e.stopPropagation(); setChatTabMenu(chatTabMenu === chat.title ? null : chat.title); }}
-                          className="p-1 rounded-md hover:bg-accent transition-colors text-muted-foreground"
-                        >
-                          <MoreHorizontal size={16} />
+                      {/* New chat input */}
+                      <div className="flex items-center gap-2 border border-border rounded-full px-5 py-3 bg-background mb-8">
+                        <Plus size={18} className="text-muted-foreground" />
+                        <span className="flex-1 text-sm text-muted-foreground">Type a message...</span>
+                        <button className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-muted text-sm text-foreground hover:bg-accent transition-colors">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 10v3"/><path d="M6 6v11"/><path d="M10 3v18"/><path d="M14 8v7"/><path d="M18 5v13"/><path d="M22 10v3"/></svg>
+                          Voice
                         </button>
-                      )}
-                    </div>
-                    {chatTabMenu === chat.title && (
-                      <>
-                        <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setChatTabMenu(null); }} />
-                        <div className="absolute right-0 top-full mt-1 bg-background border border-border rounded-2xl shadow-lg py-2 z-50 min-w-[160px]" onClick={(e) => e.stopPropagation()}>
-                          <button
-                            onClick={() => setChatTabMenu(null)}
-                            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-destructive hover:bg-accent transition-colors"
-                          >
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
-                            Delete
-                          </button>
+                      </div>
+
+                      {chatItems.map((chat) => (
+                        <div key={chat.title} className="relative flex items-center justify-between py-5 cursor-pointer hover:bg-accent/30 transition-colors -mx-2 px-2 rounded-md" onClick={() => setActiveTeamChat({ title: chat.title, messages: [{ role: "user", content: chat.title }, { role: "assistant", content: "Hi! How can I help you with this?" }], avatars: chat.avatars })}>
+                          <div>
+                            <h3 className="text-sm font-medium text-foreground">{chat.title}</h3>
+                            <p className="text-sm text-muted-foreground mt-0.5">{chat.subtitle}</p>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <div className="flex" style={{ gap: "-14px" }}>
+                              {chat.avatars.map((av, i) => (
+                                <div key={i} className={`w-8 h-8 rounded-full ${av.bg} flex items-center justify-center text-[11px] font-medium text-white ring-2 ring-background group/avatar relative`} style={{ marginLeft: i > 0 ? '-13px' : '0', zIndex: chat.avatars.length - i }}>
+                                  {av.initials}
+                                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 rounded-lg bg-foreground text-background text-xs whitespace-nowrap opacity-0 invisible group-hover/avatar:opacity-100 group-hover/avatar:visible transition-all pointer-events-none z-50 text-center shadow-lg">
+                                    <div className="font-normal">{av.name}</div>
+                                    <div className="text-background/70">{av.email}</div>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                            <span className="text-sm text-muted-foreground whitespace-nowrap">{chat.date}</span>
+                            {!hideTeamChatActions && (
+                              <button
+                                onClick={(e) => { e.stopPropagation(); setChatTabMenu(chatTabMenu === chat.title ? null : chat.title); }}
+                                className="p-1 rounded-md hover:bg-accent transition-colors text-muted-foreground"
+                              >
+                                <MoreHorizontal size={16} />
+                              </button>
+                            )}
+                          </div>
+                          {chatTabMenu === chat.title && (
+                            <>
+                              <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setChatTabMenu(null); }} />
+                              <div className="absolute right-0 top-full mt-1 bg-background border border-border rounded-2xl shadow-lg py-2 z-50 min-w-[160px]" onClick={(e) => e.stopPropagation()}>
+                                <button
+                                  onClick={() => setChatTabMenu(null)}
+                                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-destructive hover:bg-accent transition-colors"
+                                >
+                                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                                  Delete
+                                </button>
+                              </div>
+                            </>
+                          )}
                         </div>
-                      </>
-                    )}
+                      ))}
+                    </div>
+                  );
+                })()}
+              </>
+            ) : (
+              <>
+                {/* Original chats view for non-next-version */}
+                <div className="flex items-center gap-2 border border-border rounded-full px-5 py-3 bg-background mb-8">
+                  <Plus size={18} className="text-muted-foreground" />
+                  <span className="flex-1 text-sm text-muted-foreground">Type a message...</span>
+                  <button className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-muted text-sm text-foreground hover:bg-accent transition-colors">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 10v3"/><path d="M6 6v11"/><path d="M10 3v18"/><path d="M14 8v7"/><path d="M18 5v13"/><path d="M22 10v3"/></svg>
+                    Voice
+                  </button>
+                </div>
+
+                {hideProjects ? (
+                  <div className="text-center py-16 text-muted-foreground text-sm">
+                    No chats yet. Start a conversation to get going.
                   </div>
-                ))}
-              </div>
+                ) : (
+                  <div>
+                    {[
+                      { title: "Q4 Strategy alignment", subtitle: "Hi! How can I help you with this?", date: "Apr 5", avatars: [
+                        { initials: "AT", bg: "bg-amber-700", name: "Alessandro Tunzi", email: "alessandro@rubylabs.com" },
+                        { initials: "R", bg: "bg-green-600", name: "Paolo Rossi", email: "paolo@rubylabs.com" },
+                      ] },
+                      { title: "Claude settings help", subtitle: "Hi! How can I help you with this?", date: "Apr 3", avatars: [
+                        { initials: "AT", bg: "bg-amber-700", name: "Alessandro Tunzi", email: "alessandro@rubylabs.com" },
+                      ] },
+                      { title: "Design system updates", subtitle: "Hi! How can I help you with this?", date: "Mar 28", avatars: [
+                        { initials: "AT", bg: "bg-amber-700", name: "Alessandro Tunzi", email: "alessandro@rubylabs.com" },
+                        { initials: "T", bg: "bg-green-600", name: "Alessandro Tunzi", email: "alessandro@rubylabs.com" },
+                        { initials: "R", bg: "bg-blue-500", name: "Paolo Rossi", email: "paolo@rubylabs.com" },
+                      ] },
+                    ].map((chat) => (
+                      <div key={chat.title} className="relative flex items-center justify-between py-5 cursor-pointer hover:bg-accent/30 transition-colors -mx-2 px-2 rounded-md" onClick={() => setActiveTeamChat({ title: chat.title, messages: [{ role: "user", content: chat.title }, { role: "assistant", content: "Hi! How can I help you with this?" }], avatars: chat.avatars })}>
+                        <div>
+                          <h3 className="text-sm font-medium text-foreground">{chat.title}</h3>
+                          <p className="text-sm text-muted-foreground mt-0.5">{chat.subtitle}</p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="flex" style={{ gap: "-14px" }}>
+                            {chat.avatars.map((av, i) => (
+                              <div key={i} className={`w-8 h-8 rounded-full ${av.bg} flex items-center justify-center text-[11px] font-medium text-white ring-2 ring-background group/avatar relative`} style={{ marginLeft: i > 0 ? '-13px' : '0', zIndex: chat.avatars.length - i }}>
+                                {av.initials}
+                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 rounded-lg bg-foreground text-background text-xs whitespace-nowrap opacity-0 invisible group-hover/avatar:opacity-100 group-hover/avatar:visible transition-all pointer-events-none z-50 text-center shadow-lg">
+                                  <div className="font-normal">{av.name}</div>
+                                  <div className="text-background/70">{av.email}</div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                          <span className="text-sm text-muted-foreground whitespace-nowrap">{chat.date}</span>
+                          {!hideTeamChatActions && (
+                            <button
+                              onClick={(e) => { e.stopPropagation(); setChatTabMenu(chatTabMenu === chat.title ? null : chat.title); }}
+                              className="p-1 rounded-md hover:bg-accent transition-colors text-muted-foreground"
+                            >
+                              <MoreHorizontal size={16} />
+                            </button>
+                          )}
+                        </div>
+                        {chatTabMenu === chat.title && (
+                          <>
+                            <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setChatTabMenu(null); }} />
+                            <div className="absolute right-0 top-full mt-1 bg-background border border-border rounded-2xl shadow-lg py-2 z-50 min-w-[160px]" onClick={(e) => e.stopPropagation()}>
+                              <button
+                                onClick={() => setChatTabMenu(null)}
+                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-destructive hover:bg-accent transition-colors"
+                              >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                                Delete
+                              </button>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
             )}
           </div>
         )}
