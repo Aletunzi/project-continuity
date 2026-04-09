@@ -13,6 +13,7 @@ import TeamFeature from "./pages/TeamFeature.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import NewTeam from "./pages/NewTeam.tsx";
 import MemberView from "./pages/MemberView.tsx";
+import TeamFeatureNextVersion from "./pages/TeamFeatureNextVersion.tsx";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,10 @@ const App = () => (
           <Route path="/member-view/teams" element={<MemberView />} />
           <Route path="/member-view/project/:id" element={<MemberView />} />
           <Route path="/member-view/my-organization" element={<MemberView />} />
+          <Route path="/team-feature-next-version" element={<TeamFeatureNextVersion />} />
+          <Route path="/team-feature-next-version/teams" element={<TeamFeatureNextVersion />} />
+          <Route path="/team-feature-next-version/project/:id" element={<TeamFeatureNextVersion />} />
+          <Route path="/team-feature-next-version/my-organization" element={<TeamFeatureNextVersion />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
