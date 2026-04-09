@@ -31,9 +31,11 @@ const initialMembersData: { name: string; email: string; role: MemberRole; tier:
 const sortOptions = ["Recent activity", "Last modified", "Date created"] as const;
 type SortOption = typeof sortOptions[number];
 
-const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProject = false, hideAddMember = false, hideMemberActions = false, hideTeamChatActions = false }: { basePath?: string; hideProjects?: boolean; hideAddProject?: boolean; hideAddMember?: boolean; hideMemberActions?: boolean; hideTeamChatActions?: boolean }) => {
+const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProject = false, hideAddMember = false, hideMemberActions = false, hideTeamChatActions = false, showProjectSubTabs = false }: { basePath?: string; hideProjects?: boolean; hideAddProject?: boolean; hideAddMember?: boolean; hideMemberActions?: boolean; hideTeamChatActions?: boolean; showProjectSubTabs?: boolean }) => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const [projectSearchQuery, setProjectSearchQuery] = useState("");
+  const [projectSubTab, setProjectSubTab] = useState<"your" | "team" | "shared">("your");
   const [sortBy, setSortBy] = useState<SortOption>("Recent activity");
   const [sortOpen, setSortOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState<"projects" | "chats" | "files" | "members">("projects");
@@ -154,6 +156,12 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
   const premiumCost = premiumDiff > 0 ? premiumDiff * costPerSeat : 0;
   const totalCost = standardCost + premiumCost;
   const belowMinimum = totalAdjusted < minSeats;
+
+  const projectSearchFiltered = teamsData.filter(
+    (team) =>
+      team.name.toLowerCase().includes((showProjectSubTabs ? projectSearchQuery : searchQuery).toLowerCase()) ||
+      team.description.toLowerCase().includes((showProjectSubTabs ? projectSearchQuery : searchQuery).toLowerCase())
+  );
 
   const filteredTeams = teamsData.filter(
     (team) =>
@@ -787,6 +795,29 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
     </div>
   );
 
+  const renderProjectCards = (teams: typeof teamsData) => (
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {teams.map((team) => (
+          <button
+            key={team.id}
+            onClick={() => navigate(`${basePath}/project/${team.id}`)}
+            className="flex flex-col items-start text-left border border-border rounded-xl p-5 hover:bg-accent/50 transition-colors cursor-pointer"
+          >
+            <h3 className="text-sm font-normal text-foreground mb-1">{team.name}</h3>
+            <span className="text-xs text-muted-foreground">Project team</span>
+            <span className="text-xs text-muted-foreground mt-auto pt-2">{team.updatedAt}</span>
+          </button>
+        ))}
+      </div>
+      {teams.length === 0 && (
+        <div className="text-center py-16 text-muted-foreground text-sm">
+          No projects found.
+        </div>
+      )}
+    </>
+  );
+
   // Projects tab content
   const renderProjectsView = () => (
     <>
@@ -794,27 +825,47 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
         <div className="text-center py-16 text-muted-foreground text-sm">
           No projects yet. Create your first project to get started.
         </div>
-      ) : (
+      ) : showProjectSubTabs ? (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {filteredTeams.map((team) => (
+          {/* Project search bar */}
+          <div className="flex items-center gap-2 border border-border rounded-lg px-3 py-2 bg-background mb-4">
+            <Search size={16} className="text-muted-foreground" />
+            <input
+              type="text"
+              value={projectSearchQuery}
+              onChange={(e) => setProjectSearchQuery(e.target.value)}
+              placeholder="Search projects..."
+              className="flex-1 bg-transparent outline-none text-sm text-foreground placeholder:text-muted-foreground"
+            />
+            {projectSearchQuery && (
+              <button onClick={() => setProjectSearchQuery("")} className="text-muted-foreground hover:text-foreground">
+                <X size={14} />
+              </button>
+            )}
+          </div>
+
+          {/* Sub-tabs */}
+          <div className="flex items-center gap-2 mb-5">
+            {([["your", "Your project"], ["team", "Team"], ["shared", "Shared with you"]] as const).map(([key, label]) => (
               <button
-                key={team.id}
-                onClick={() => navigate(`${basePath}/project/${team.id}`)}
-                className="flex flex-col items-start text-left border border-border rounded-xl p-5 hover:bg-accent/50 transition-colors cursor-pointer"
+                key={key}
+                onClick={() => setProjectSubTab(key as any)}
+                className={`px-4 py-1.5 rounded-lg text-sm transition-colors ${
+                  projectSubTab === key
+                    ? "bg-accent text-foreground font-normal"
+                    : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
+                }`}
               >
-                <h3 className="text-sm font-normal text-foreground mb-1">{team.name}</h3>
-                <span className="text-xs text-muted-foreground">Project team</span>
-                <span className="text-xs text-muted-foreground mt-auto pt-2">{team.updatedAt}</span>
+                {label}
               </button>
             ))}
           </div>
 
-          {filteredTeams.length === 0 && (
-            <div className="text-center py-16 text-muted-foreground text-sm">
-              No projects found.
-            </div>
-          )}
+          {renderProjectCards(projectSearchFiltered)}
+        </>
+      ) : (
+        <>
+          {renderProjectCards(filteredTeams)}
         </>
       )}
     </>
