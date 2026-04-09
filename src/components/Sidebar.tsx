@@ -15,10 +15,12 @@ interface SidebarProps {
   showTeams?: boolean;
   showInvite?: boolean;
   showOrg?: boolean;
+  showOrgName?: boolean;
   basePath?: string;
   hideTeamSections?: boolean;
   hideNewProject?: boolean;
   hideDelete?: boolean;
+  hideTeamChatActions?: boolean;
   onTeamClick?: () => void;
 }
 
@@ -36,7 +38,7 @@ const recentChats = [
 const roles = ["User", "Admin"] as const;
 const tiers = ["Standard", "Pro"] as const;
 
-const Sidebar = ({ showTeams = true, showInvite = true, showOrg = true, basePath = "/team-feature", hideTeamSections = false, hideNewProject = false, hideDelete = false, onTeamClick }: SidebarProps) => {
+const Sidebar = ({ showTeams = true, showInvite = true, showOrg = true, showOrgName, basePath = "/team-feature", hideTeamSections = false, hideNewProject = false, hideDelete = false, hideTeamChatActions = false, onTeamClick }: SidebarProps) => {
   const teamNavPath = `${basePath}/teams`;
   const navItems = showTeams ? [...baseNavItems, { icon: Users, label: "Team", path: teamNavPath }] : baseNavItems;
   const navigate = useNavigate();
@@ -341,7 +343,7 @@ const Sidebar = ({ showTeams = true, showInvite = true, showOrg = true, basePath
             </div>
             <div className="flex-1 text-left min-w-0">
               <span className="text-sm font-normal text-foreground block truncate">Alessandro Tunzi</span>
-              {showOrg && <span className="text-xs text-muted-foreground block truncate">RubyLabs</span>}
+              {(showOrg || showOrgName) && <span className="text-xs text-muted-foreground block truncate">RubyLabs</span>}
             </div>
             <ChevronDown size={16} className="text-muted-foreground shrink-0" />
           </button>
