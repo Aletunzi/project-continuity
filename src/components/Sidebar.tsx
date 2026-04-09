@@ -39,7 +39,8 @@ const recentChats = [
 const roles = ["User", "Admin"] as const;
 const tiers = ["Standard", "Pro"] as const;
 
-const Sidebar = ({ showTeams = true, showInvite = true, showOrg = true, showOrgName, basePath = "/team-feature", hideTeamSections = false, hideNewProject = false, hideDelete = false, hideTeamChatActions = false, onTeamClick }: SidebarProps) => {
+const Sidebar = ({ showTeams = true, showInvite = true, showOrg = true, showOrgName, basePath = "/team-feature", hideTeamSections = false, hideNewProject = false, hideDelete = false, hideTeamChatActions = false, onTeamClick, customProjects }: SidebarProps) => {
+  const sidebarProjects = customProjects || projects;
   const teamNavPath = `${basePath}/teams`;
   const navItems = showTeams ? [...baseNavItems, { icon: Users, label: "Team", path: teamNavPath }] : baseNavItems;
   const navigate = useNavigate();
