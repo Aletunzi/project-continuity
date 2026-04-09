@@ -31,9 +31,11 @@ const initialMembersData: { name: string; email: string; role: MemberRole; tier:
 const sortOptions = ["Recent activity", "Last modified", "Date created"] as const;
 type SortOption = typeof sortOptions[number];
 
-const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProject = false, hideAddMember = false, hideMemberActions = false, hideTeamChatActions = false }: { basePath?: string; hideProjects?: boolean; hideAddProject?: boolean; hideAddMember?: boolean; hideMemberActions?: boolean; hideTeamChatActions?: boolean }) => {
+const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProject = false, hideAddMember = false, hideMemberActions = false, hideTeamChatActions = false, showProjectSubTabs = false }: { basePath?: string; hideProjects?: boolean; hideAddProject?: boolean; hideAddMember?: boolean; hideMemberActions?: boolean; hideTeamChatActions?: boolean; showProjectSubTabs?: boolean }) => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const [projectSearchQuery, setProjectSearchQuery] = useState("");
+  const [projectSubTab, setProjectSubTab] = useState<"your" | "team" | "shared">("your");
   const [sortBy, setSortBy] = useState<SortOption>("Recent activity");
   const [sortOpen, setSortOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState<"projects" | "chats" | "files" | "members">("projects");
