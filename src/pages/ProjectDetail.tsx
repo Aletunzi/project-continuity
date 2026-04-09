@@ -203,6 +203,14 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
             <button onClick={() => { setActiveChat(null); navigate(`${basePath}/teams`); }} className="text-muted-foreground hover:text-foreground hover:underline transition-colors">
               Team
             </button>
+            {fromLabel && (
+              <>
+                <span className="text-muted-foreground">/</span>
+                <button onClick={() => { setActiveChat(null); navigate(`${basePath}/teams`); }} className="text-muted-foreground hover:text-foreground hover:underline transition-colors">
+                  {fromLabel}
+                </button>
+              </>
+            )}
             <span className="text-muted-foreground">/</span>
             <button onClick={() => setActiveChat(null)} className="text-muted-foreground hover:text-foreground hover:underline transition-colors">
               {project.name}
