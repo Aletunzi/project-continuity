@@ -13,6 +13,7 @@ import TeamFeature from "./pages/TeamFeature.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import NewTeam from "./pages/NewTeam.tsx";
 import MemberView from "./pages/MemberView.tsx";
+import TeamFeatureNextVersion from "./pages/TeamFeatureNextVersion.tsx";
 
 const queryClient = new QueryClient();
 
