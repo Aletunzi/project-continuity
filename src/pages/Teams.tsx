@@ -31,7 +31,7 @@ const initialMembersData: { name: string; email: string; role: MemberRole; tier:
 const sortOptions = ["Recent activity", "Last modified", "Date created"] as const;
 type SortOption = typeof sortOptions[number];
 
-const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProject = false }: { basePath?: string; hideProjects?: boolean; hideAddProject?: boolean }) => {
+const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProject = false, hideAddMember = false, hideMemberActions = false }: { basePath?: string; hideProjects?: boolean; hideAddProject?: boolean; hideAddMember?: boolean; hideMemberActions?: boolean }) => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("Recent activity");
@@ -1101,14 +1101,16 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
         )}
         {activeFilter === "members" && (
           <div>
-            <div className="flex items-center justify-end mb-4">
-              <button
-                onClick={() => setAddMemberOpen(true)}
-                className="px-5 py-2 rounded-full border border-border bg-background text-foreground text-sm font-normal hover:bg-accent transition-colors"
-              >
-                Add
-              </button>
-            </div>
+            {!hideAddMember && (
+              <div className="flex items-center justify-end mb-4">
+                <button
+                  onClick={() => setAddMemberOpen(true)}
+                  className="px-5 py-2 rounded-full border border-border bg-background text-foreground text-sm font-normal hover:bg-accent transition-colors"
+                >
+                  Add
+                </button>
+              </div>
+            )}
 
             <div className="border border-border rounded-xl overflow-hidden">
               <table className="w-full">
@@ -1132,7 +1134,7 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
                         <span className="text-sm text-foreground">{member.role}</span>
                       </td>
                       <td className="px-4 py-3 text-right">
-                        {!member.isOwner && (
+                        {!member.isOwner && !hideMemberActions && (
                           <div className="relative inline-block">
                             <button
                               className="p-1 rounded-md hover:bg-accent text-muted-foreground transition-colors"
