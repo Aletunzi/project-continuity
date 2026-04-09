@@ -319,7 +319,7 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
           {/* Title row */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <SharedFolderIcon size={28} className="text-foreground" />
+              {getProjectIcon(id || "", 28, "text-foreground")}
               <h1 className="text-2xl font-normal text-foreground">{project.name}</h1>
             </div>
             {!hideSettings && (
