@@ -274,7 +274,7 @@ const Sidebar = ({ showTeams = true, showInvite = true, showOrg = true, basePath
                   </div>
                 </>
               )}
-              {!hideDelete && (
+              {(!hideDelete || chatMenuOpen.startsWith('teamchat-')) && (
                 <button
                   onClick={() => setChatMenuOpen(null)}
                   className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-destructive hover:bg-accent transition-colors"
