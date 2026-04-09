@@ -828,7 +828,7 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
       ) : showProjectSubTabs ? (
         <>
           {/* Project search bar */}
-          <div className="flex items-center gap-2 border border-border rounded-lg px-3 py-2 bg-background mb-4">
+          <div className="flex items-center gap-2 border border-border rounded-lg px-4 py-3 bg-background mb-6">
             <Search size={16} className="text-muted-foreground" />
             <input
               type="text"
