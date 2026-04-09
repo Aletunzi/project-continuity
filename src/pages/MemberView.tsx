@@ -12,7 +12,7 @@ const MemberView = () => {
 
   const renderContent = () => {
     if (location.pathname.startsWith(`${BASE_PATH}/project/`)) return <ProjectDetail basePath={BASE_PATH} hideSettings hideDelete />;
-    if (location.pathname === `${BASE_PATH}/teams`) return <Teams basePath={BASE_PATH} hideAddProject hideAddMember hideMemberActions />;
+    if (location.pathname === `${BASE_PATH}/teams`) return <Teams basePath={BASE_PATH} hideAddProject hideAddMember hideMemberActions hideTeamChatActions />;
     if (location.pathname === `${BASE_PATH}/my-organization`) return <MyOrganization basePath={BASE_PATH} />;
     return <ChatArea />;
   };
