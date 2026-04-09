@@ -795,13 +795,13 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
     </div>
   );
 
-  const renderProjectCards = (teams: typeof teamsData) => (
+  const renderProjectCards = (teams: typeof teamsData, from?: string) => (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {teams.map((team) => (
           <button
             key={team.id}
-            onClick={() => navigate(`${basePath}/project/${team.id}`)}
+            onClick={() => navigate(`${basePath}/project/${team.id}${from ? `?from=${from}` : ''}`)}
             className="flex flex-col items-start text-left border border-border rounded-xl p-5 hover:bg-accent/50 transition-colors cursor-pointer"
           >
             <h3 className="text-sm font-normal text-foreground mb-1">{team.name}</h3>
