@@ -22,6 +22,7 @@ interface SidebarProps {
   hideDelete?: boolean;
   hideTeamChatActions?: boolean;
   onTeamClick?: () => void;
+  customProjects?: { name: string; id: string; chats: string[] }[];
 }
 
 const projects = [
