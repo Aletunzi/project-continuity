@@ -1009,12 +1009,14 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
                         ))}
                       </div>
                       <span className="text-sm text-muted-foreground whitespace-nowrap">{chat.date}</span>
-                      <button
-                        onClick={(e) => { e.stopPropagation(); setChatTabMenu(chatTabMenu === chat.title ? null : chat.title); }}
-                        className="p-1 rounded-md hover:bg-accent transition-colors text-muted-foreground"
-                      >
-                        <MoreHorizontal size={16} />
-                      </button>
+                      {!hideTeamChatActions && (
+                        <button
+                          onClick={(e) => { e.stopPropagation(); setChatTabMenu(chatTabMenu === chat.title ? null : chat.title); }}
+                          className="p-1 rounded-md hover:bg-accent transition-colors text-muted-foreground"
+                        >
+                          <MoreHorizontal size={16} />
+                        </button>
+                      )}
                     </div>
                     {chatTabMenu === chat.title && (
                       <>
