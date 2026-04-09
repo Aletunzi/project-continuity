@@ -404,6 +404,7 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
                         </div>
                       ))}
                     </div>
+                    {!isSharedInNextVersion && (
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -413,6 +414,7 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
                     >
                       <MoreHorizontal size={18} />
                     </button>
+                    )}
                     <span className="text-xs text-muted-foreground shrink-0">{["Apr 5", "Apr 3", "Mar 28", "Mar 25", "Mar 19", "Mar 14", "Mar 10", "Mar 5", "Feb 27", "Feb 20"][i] || "Mar 19"}</span>
                     {chatMenu === chat.name && (
                       <>
