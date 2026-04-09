@@ -170,22 +170,24 @@ const Sidebar = ({ showTeams = true, showInvite = true, showOrg = true, showOrgN
                   >
                     {chat.name}
                   </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      const key = `teamchat-${chat.name}`;
-                      if (chatMenuOpen === key) {
-                        setChatMenuOpen(null);
-                      } else {
-                        const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-                        setChatMenuPos({ top: rect.top, left: rect.right + 4 });
-                        setChatMenuOpen(key);
-                      }
-                    }}
-                    className={`absolute right-2 top-1/2 -translate-y-1/2 p-0.5 rounded-md hover:bg-accent text-muted-foreground hover:text-foreground transition-opacity ${chatMenuOpen === `teamchat-${chat.name}` ? 'opacity-100' : 'opacity-0 group-hover/teamchat:opacity-100'}`}
-                  >
-                    <MoreHorizontal size={16} />
-                  </button>
+                  {!hideTeamChatActions && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const key = `teamchat-${chat.name}`;
+                        if (chatMenuOpen === key) {
+                          setChatMenuOpen(null);
+                        } else {
+                          const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+                          setChatMenuPos({ top: rect.top, left: rect.right + 4 });
+                          setChatMenuOpen(key);
+                        }
+                      }}
+                      className={`absolute right-2 top-1/2 -translate-y-1/2 p-0.5 rounded-md hover:bg-accent text-muted-foreground hover:text-foreground transition-opacity ${chatMenuOpen === `teamchat-${chat.name}` ? 'opacity-100' : 'opacity-0 group-hover/teamchat:opacity-100'}`}
+                    >
+                      <MoreHorizontal size={16} />
+                    </button>
+                  )}
                 </div>
               ))}
             </>
