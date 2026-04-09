@@ -18,6 +18,7 @@ interface SidebarProps {
   basePath?: string;
   hideTeamSections?: boolean;
   hideNewProject?: boolean;
+  hideDelete?: boolean;
   onTeamClick?: () => void;
 }
 
@@ -35,7 +36,7 @@ const recentChats = [
 const roles = ["User", "Admin"] as const;
 const tiers = ["Standard", "Pro"] as const;
 
-const Sidebar = ({ showTeams = true, showInvite = true, showOrg = true, basePath = "/team-feature", hideTeamSections = false, hideNewProject = false, onTeamClick }: SidebarProps) => {
+const Sidebar = ({ showTeams = true, showInvite = true, showOrg = true, basePath = "/team-feature", hideTeamSections = false, hideNewProject = false, hideDelete = false, onTeamClick }: SidebarProps) => {
   const teamNavPath = `${basePath}/teams`;
   const navItems = showTeams ? [...baseNavItems, { icon: Users, label: "Team", path: teamNavPath }] : baseNavItems;
   const navigate = useNavigate();
@@ -252,13 +253,15 @@ const Sidebar = ({ showTeams = true, showInvite = true, showOrg = true, basePath
                   </div>
                 )}
               </div>
-              <button
-                onClick={() => setChatMenuOpen(null)}
-                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-destructive hover:bg-accent transition-colors"
-              >
-                <Trash2 size={16} />
-                Delete
-              </button>
+              {!hideDelete && (
+                <button
+                  onClick={() => setChatMenuOpen(null)}
+                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-destructive hover:bg-accent transition-colors"
+                >
+                  <Trash2 size={16} />
+                  Delete
+                </button>
+              )}
             </div>
           </>
         )}
