@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowLeft, ArrowUp, MoreHorizontal, MoreVertical, Plus, ChevronDown, ChevronRight, Copy, ThumbsUp, ThumbsDown, RotateCcw, Share2, Pencil, FolderMinus, Archive, Flag, Trash2, X, Settings, SmilePlus, FileText, AudioLines, Mic, FolderOpen } from "lucide-react";
 
 const PersonalFolderIcon = ({ size = 28, className = "" }: { size?: number; className?: string }) => (
