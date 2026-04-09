@@ -43,7 +43,7 @@ const projectsData: Record<string, { name: string; description: string; chats: C
 type Message = { role: "user" | "assistant"; content: string };
 type Chat = { name: string; messages: Message[]; participants: ChatParticipant[] };
 
-const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false }: { basePath?: string; hideSettings?: boolean }) => {
+const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideDelete = false }: { basePath?: string; hideSettings?: boolean; hideDelete?: boolean }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const project = projectsData[id || ""] || { name: "Project", description: "", chats: [] };
@@ -399,16 +399,18 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false }: { b
                             </div>
                           )}
                         </div>
-                        <button
-                          onClick={() => {
-                            setChatHistory((prev) => prev.filter((c) => c.name !== chat.name));
-                            setChatMenu(null);
-                          }}
-                          className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-destructive hover:bg-accent transition-colors"
-                        >
-                          <Trash2 size={16} />
-                          Delete
-                        </button>
+                        {!hideDelete && (
+                          <button
+                            onClick={() => {
+                              setChatHistory((prev) => prev.filter((c) => c.name !== chat.name));
+                              setChatMenu(null);
+                            }}
+                            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-destructive hover:bg-accent transition-colors"
+                          >
+                            <Trash2 size={16} />
+                            Delete
+                          </button>
+                        )}
                       </div>
                       </>
                     )}
