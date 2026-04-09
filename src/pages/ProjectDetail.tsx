@@ -3,7 +3,15 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, ArrowUp, MoreHorizontal, MoreVertical, Plus, ChevronDown, ChevronRight, Copy, ThumbsUp, ThumbsDown, RotateCcw, Share2, Pencil, FolderMinus, Archive, Flag, Trash2, X, Settings, SmilePlus, FileText, AudioLines, Mic, FolderOpen } from "lucide-react";
 
-const SharedFolderIcon = ({ size = 28, className = "" }: { size?: number; className?: string }) => (
+const PersonalFolderIcon = ({ size = 28, className = "" }: { size?: number; className?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />
+    <circle cx="12" cy="11" r="2.5" />
+    <path d="M8 20c0-2.5 2-4 4-4s4 1.5 4 4" />
+  </svg>
+);
+
+const TeamFolderIcon = ({ size = 28, className = "" }: { size?: number; className?: string }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className={className}>
     <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />
     <circle cx="10" cy="13" r="2" />
@@ -11,6 +19,23 @@ const SharedFolderIcon = ({ size = 28, className = "" }: { size?: number; classN
     <path d="M7 20c0-2 1.5-3 3-3s1.5.5 2.5.5 1.5-.5 2.5-.5 3 1 3 3" />
   </svg>
 );
+
+const SharedFolderIcon = ({ size = 28, className = "" }: { size?: number; className?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />
+    <circle cx="12" cy="11" r="1.5" />
+    <path d="M15.5 14.5l-2-1.5" />
+    <path d="M15.5 10.5l-2 1.5" />
+    <circle cx="16.5" cy="10" r="1" />
+    <circle cx="16.5" cy="15" r="1" />
+  </svg>
+);
+
+const getProjectIcon = (projectId: string, size = 28, className = "text-foreground") => {
+  if (projectId === "99") return <PersonalFolderIcon size={size} className={className} />;
+  if (projectId === "98") return <SharedFolderIcon size={size} className={className} />;
+  return <TeamFolderIcon size={size} className={className} />;
+};
 import ShareModal from "@/components/ShareModal";
 import ModelSelector from "@/components/ModelSelector";
 
@@ -294,7 +319,7 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
           {/* Title row */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <SharedFolderIcon size={28} className="text-foreground" />
+              {getProjectIcon(id || "", 28, "text-foreground")}
               <h1 className="text-2xl font-normal text-foreground">{project.name}</h1>
             </div>
             {!hideSettings && (
