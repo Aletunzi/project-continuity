@@ -847,7 +847,8 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
           </div>
 
           {/* Sub-tabs */}
-          <div className="flex items-center gap-2 mb-5">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2">
             {([["your", "Your projects"], ["team", "Team projects"], ["shared", "Shared with you"]] as const).map(([key, label]) => (
               <button
                 key={key}
@@ -861,6 +862,16 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
                 {label}
               </button>
             ))}
+            </div>
+            {projectSubTab !== "shared" && !hideAddProject && (
+              <button
+                onClick={() => setNewProjectOpen(true)}
+                className="flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-border bg-background text-sm text-foreground hover:bg-accent transition-colors"
+              >
+                <Plus size={16} />
+                Add project
+              </button>
+            )}
           </div>
 
           {projectSubTab === "your" && renderProjectCards([{
@@ -997,14 +1008,6 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
         {/* Header */}
         <div className="flex items-center justify-between mb-6" style={{ minHeight: '44px' }}>
           <h1 className="text-2xl font-normal text-foreground">Team</h1>
-          {!hideAddProject && (
-            <button
-              onClick={() => { setActiveFilter("projects"); setNewProjectOpen(true); }}
-              className={`px-5 py-2 rounded-full border border-border bg-background text-foreground text-sm font-normal hover:bg-accent transition-colors ${activeFilter !== "projects" ? "invisible" : ""}`}
-            >
-              Add project
-            </button>
-          )}
         </div>
 
       </div>
