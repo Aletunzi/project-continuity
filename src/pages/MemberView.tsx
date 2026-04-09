@@ -12,14 +12,14 @@ const MemberView = () => {
 
   const renderContent = () => {
     if (location.pathname.startsWith(`${BASE_PATH}/project/`)) return <ProjectDetail basePath={BASE_PATH} hideSettings hideDelete />;
-    if (location.pathname === `${BASE_PATH}/teams`) return <Teams basePath={BASE_PATH} hideAddProject hideAddMember hideMemberActions />;
+    if (location.pathname === `${BASE_PATH}/teams`) return <Teams basePath={BASE_PATH} hideAddProject hideAddMember hideMemberActions hideTeamChatActions />;
     if (location.pathname === `${BASE_PATH}/my-organization`) return <MyOrganization basePath={BASE_PATH} />;
     return <ChatArea />;
   };
 
   return (
     <div className="flex h-screen bg-background">
-      <Sidebar showInvite={false} showOrg={false} hideNewProject hideDelete basePath={BASE_PATH} />
+      <Sidebar showInvite={false} showOrg={false} showOrgName hideNewProject hideDelete hideTeamChatActions basePath={BASE_PATH} />
       {renderContent()}
     </div>
   );

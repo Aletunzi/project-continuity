@@ -31,7 +31,7 @@ const initialMembersData: { name: string; email: string; role: MemberRole; tier:
 const sortOptions = ["Recent activity", "Last modified", "Date created"] as const;
 type SortOption = typeof sortOptions[number];
 
-const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProject = false, hideAddMember = false, hideMemberActions = false }: { basePath?: string; hideProjects?: boolean; hideAddProject?: boolean; hideAddMember?: boolean; hideMemberActions?: boolean }) => {
+const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProject = false, hideAddMember = false, hideMemberActions = false, hideTeamChatActions = false }: { basePath?: string; hideProjects?: boolean; hideAddProject?: boolean; hideAddMember?: boolean; hideMemberActions?: boolean; hideTeamChatActions?: boolean }) => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("Recent activity");
@@ -1009,12 +1009,14 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
                         ))}
                       </div>
                       <span className="text-sm text-muted-foreground whitespace-nowrap">{chat.date}</span>
-                      <button
-                        onClick={(e) => { e.stopPropagation(); setChatTabMenu(chatTabMenu === chat.title ? null : chat.title); }}
-                        className="p-1 rounded-md hover:bg-accent transition-colors text-muted-foreground"
-                      >
-                        <MoreHorizontal size={16} />
-                      </button>
+                      {!hideTeamChatActions && (
+                        <button
+                          onClick={(e) => { e.stopPropagation(); setChatTabMenu(chatTabMenu === chat.title ? null : chat.title); }}
+                          className="p-1 rounded-md hover:bg-accent transition-colors text-muted-foreground"
+                        >
+                          <MoreHorizontal size={16} />
+                        </button>
+                      )}
                     </div>
                     {chatTabMenu === chat.title && (
                       <>
