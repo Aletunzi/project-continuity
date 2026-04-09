@@ -305,7 +305,7 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
           <ChevronDown size={14} className="text-muted-foreground" />
         </button>
         <div className="flex items-center gap-3">
-        {id !== "99" && (
+        {id !== "99" && !isSharedInNextVersion && (
         <div className="flex -space-x-2">
           {members.map((m) => (
             <div key={m.initials} className="relative group z-10 hover:z-20">
