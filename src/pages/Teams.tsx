@@ -35,7 +35,9 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [projectSearchQuery, setProjectSearchQuery] = useState("");
+  const [chatSearchQuery, setChatSearchQuery] = useState("");
   const [projectSubTab, setProjectSubTab] = useState<"your" | "team" | "shared">("your");
+  const [chatSubTab, setChatSubTab] = useState<"your" | "team" | "shared">("your");
   const [sortBy, setSortBy] = useState<SortOption>("Recent activity");
   const [sortOpen, setSortOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState<"projects" | "chats" | "files" | "members">("projects");
