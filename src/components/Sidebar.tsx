@@ -281,13 +281,15 @@ const Sidebar = ({ showTeams = true, showInvite = true, showOrg = true, basePath
                   <User size={18} className="text-muted-foreground" />
                   <span>My profile</span>
                 </button>
-                <button
-                  onClick={() => { setProfileMenuOpen(false); navigate(`${basePath}/my-organization`); }}
-                  className="flex items-center gap-3 px-4 py-2.5 text-sm font-normal text-foreground hover:bg-accent w-full transition-colors"
-                >
-                  <Users size={18} className="text-muted-foreground" />
-                  <span>My organization</span>
-                </button>
+                {showOrg && (
+                  <button
+                    onClick={() => { setProfileMenuOpen(false); navigate(`${basePath}/my-organization`); }}
+                    className="flex items-center gap-3 px-4 py-2.5 text-sm font-normal text-foreground hover:bg-accent w-full transition-colors"
+                  >
+                    <Users size={18} className="text-muted-foreground" />
+                    <span>My organization</span>
+                  </button>
+                )}
                 <button
                   onClick={() => { setProfileMenuOpen(false); navigate(showOrg ? "/onboarding" : "/onboarding?upgrade=true"); }}
                   className="flex items-center gap-3 px-4 py-2.5 text-sm font-normal text-foreground hover:bg-accent w-full transition-colors"
