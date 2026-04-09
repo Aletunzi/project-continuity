@@ -919,6 +919,14 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
             <button onClick={() => setActiveTeamChat(null)} className="text-muted-foreground hover:text-foreground hover:underline transition-colors">
               {showProjectSubTabs ? "Chats" : "Team"}
             </button>
+            {showProjectSubTabs && (
+              <>
+                <span className="text-muted-foreground">/</span>
+                <button onClick={() => setActiveTeamChat(null)} className="text-muted-foreground hover:text-foreground hover:underline transition-colors">
+                  {chatSubTab === "your" ? "Your chats" : chatSubTab === "team" ? "Team chats" : "Shared with you"}
+                </button>
+              </>
+            )}
             <span className="text-muted-foreground">/</span>
             <span className="truncate max-w-[200px]">{activeTeamChat.title}</span>
           </div>
