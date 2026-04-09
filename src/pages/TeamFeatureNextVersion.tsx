@@ -19,7 +19,11 @@ const TeamFeatureNextVersion = () => {
 
   return (
     <div className="flex h-screen bg-background">
-      <Sidebar showInvite={false} basePath={BASE_PATH} />
+      <Sidebar showInvite={false} basePath={BASE_PATH} customProjects={[
+        { name: "Personal Project", id: "99", chats: ["Q4 Strategy alignment", "Claude settings help", "Design system updates"] },
+        { name: "Project Ruby Labs", id: "1", chats: ["Q4 Strategy alignment", "Claude settings help", "Design system updates"] },
+        { name: "Project Empty", id: "2", chats: [] },
+      ]} />
       {renderContent()}
     </div>
   );

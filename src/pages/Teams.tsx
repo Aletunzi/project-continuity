@@ -861,7 +861,19 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
             ))}
           </div>
 
-          {renderProjectCards(projectSearchFiltered)}
+          {projectSubTab === "your" && renderProjectCards([{
+            id: 99,
+            name: "Personal Project",
+            description: "Your personal project workspace.",
+            updatedAt: "Updated 37 minutes ago",
+          }].filter(p => p.name.toLowerCase().includes(projectSearchQuery.toLowerCase())))}
+          {projectSubTab === "team" && renderProjectCards(projectSearchFiltered)}
+          {projectSubTab === "shared" && renderProjectCards([{
+            id: 98,
+            name: "Project shared with me",
+            description: "A project shared with you by a team member.",
+            updatedAt: "Updated 22 hours ago",
+          }].filter(p => p.name.toLowerCase().includes(projectSearchQuery.toLowerCase())))}
         </>
       ) : (
         <>
