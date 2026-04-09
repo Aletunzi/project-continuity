@@ -846,7 +846,7 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
 
           {/* Sub-tabs */}
           <div className="flex items-center gap-2 mb-5">
-            {([["your", "Your project"], ["team", "Team"], ["shared", "Shared with you"]] as const).map(([key, label]) => (
+            {([["your", "Your projects"], ["team", "Team"], ["shared", "Shared with you"]] as const).map(([key, label]) => (
               <button
                 key={key}
                 onClick={() => setProjectSubTab(key as any)}

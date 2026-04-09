@@ -93,7 +93,7 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
   const fromTab = searchParams.get("from");
   const project = projectsData[id || ""] || { name: "Project", description: "", chats: [] };
 
-  const fromLabel = fromTab === "your" ? "Your project" : fromTab === "shared" ? "Shared with you" : fromTab === "team" ? "Team" : null;
+  const fromLabel = fromTab === "your" ? "Your projects" : fromTab === "shared" ? "Shared with you" : fromTab === "team" ? "Team" : null;
 
   const [inputValue, setInputValue] = useState("");
   const [activeChat, setActiveChat] = useState<Chat | null>(null);
