@@ -4,21 +4,20 @@ import ChatArea from "@/components/ChatArea";
 import Teams from "@/pages/Teams";
 import ProjectDetail from "@/pages/ProjectDetail";
 
-const Index = () => {
+const IndividualAccount = () => {
   const location = useLocation();
 
   const renderContent = () => {
     if (location.pathname.startsWith("/project/")) return <ProjectDetail />;
-    if (location.pathname === "/team-feature/teams") return <Teams />;
     return <ChatArea />;
   };
 
   return (
     <div className="flex h-screen bg-background">
-      <Sidebar />
+      <Sidebar showTeams={false} showInvite={false} showOrg={false} />
       {renderContent()}
     </div>
   );
 };
 
-export default Index;
+export default IndividualAccount;
