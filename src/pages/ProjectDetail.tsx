@@ -188,8 +188,8 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
             </button>
             {id !== "99" && (
             <div className="flex -space-x-2">
-              {members.map((m) => (
-                <div key={m.initials} className="relative group z-10 hover:z-20">
+              {(isSharedInNextVersion ? activeChat.participants : members).map((m, mi) => (
+                <div key={m.initials + mi} className="relative group z-10 hover:z-20">
                   <div className={`w-7 h-7 rounded-full ${m.bg} flex items-center justify-center text-[10px] ${m.text} ring-2 ring-background cursor-pointer`}>{m.initials}</div>
                   <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-2 rounded-lg bg-foreground text-background text-xs whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all pointer-events-none z-50 text-center shadow-lg">
                     <div className="font-normal">{m.name}</div>
