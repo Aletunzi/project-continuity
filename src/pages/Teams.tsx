@@ -922,12 +922,14 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
         {/* Header */}
         <div className="flex items-center justify-between mb-6" style={{ minHeight: '44px' }}>
           <h1 className="text-2xl font-normal text-foreground">Team</h1>
-          <button
-            onClick={() => { setActiveFilter("projects"); setNewProjectOpen(true); }}
-            className={`px-5 py-2 rounded-full border border-border bg-background text-foreground text-sm font-normal hover:bg-accent transition-colors ${activeFilter !== "projects" ? "invisible" : ""}`}
-          >
-            Add project
-          </button>
+          {!hideAddProject && (
+            <button
+              onClick={() => { setActiveFilter("projects"); setNewProjectOpen(true); }}
+              className={`px-5 py-2 rounded-full border border-border bg-background text-foreground text-sm font-normal hover:bg-accent transition-colors ${activeFilter !== "projects" ? "invisible" : ""}`}
+            >
+              Add project
+            </button>
+          )}
         </div>
 
       </div>
