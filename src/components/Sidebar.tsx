@@ -106,7 +106,7 @@ const Sidebar = ({ showTeams = true, showInvite = true, showOrg = true, showOrgN
                   <span>New project</span>
                 </button>
               )}
-              {projects.map((proj) => (
+              {sidebarProjects.map((proj) => (
                 <div key={proj.id}>
                   <button
                     onClick={() => navigate(`${basePath}/project/${proj.id}`)}
