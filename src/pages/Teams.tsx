@@ -861,79 +861,19 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
             ))}
           </div>
 
-          {projectSubTab === "your" && (
-            <>
-              <div className="mb-4">
-                <h3 className="text-sm font-medium text-foreground mb-1">Personal Project</h3>
-                <span className="text-xs text-muted-foreground">Your personal project workspace</span>
-              </div>
-              <div className="divide-y divide-border">
-                {[
-                  { title: "Landing page redesign", subtitle: "Let me help you with the layout", date: "Apr 7", avatars: [{ initials: "AT", bg: "bg-amber-700", name: "Alessandro Tunzi", email: "alessandro@rubylabs.com" }] },
-                  { title: "API integration notes", subtitle: "Here's a summary of the endpoints", date: "Apr 5", avatars: [{ initials: "AT", bg: "bg-amber-700", name: "Alessandro Tunzi", email: "alessandro@rubylabs.com" }] },
-                  { title: "Bug fix tracker", subtitle: "I've listed all the open issues", date: "Apr 3", avatars: [{ initials: "AT", bg: "bg-amber-700", name: "Alessandro Tunzi", email: "alessandro@rubylabs.com" }] },
-                ].filter(c => c.title.toLowerCase().includes(projectSearchQuery.toLowerCase())).map((chat) => (
-                  <div key={chat.title} className="flex items-center justify-between py-5 cursor-pointer hover:bg-accent/30 transition-colors -mx-2 px-2 rounded-md" onClick={() => setActiveTeamChat({ title: chat.title, messages: [{ role: "user", content: chat.title }, { role: "assistant", content: chat.subtitle }], avatars: chat.avatars })}>
-                    <div>
-                      <h3 className="text-sm font-medium text-foreground">{chat.title}</h3>
-                      <p className="text-sm text-muted-foreground mt-0.5">{chat.subtitle}</p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="flex">
-                        {chat.avatars.map((av, i) => (
-                          <div key={i} className={`w-8 h-8 rounded-full ${av.bg} flex items-center justify-center text-[11px] font-medium text-white ring-2 ring-background group/avatar relative`}>
-                            {av.initials}
-                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 rounded-lg bg-foreground text-background text-xs whitespace-nowrap opacity-0 invisible group-hover/avatar:opacity-100 group-hover/avatar:visible transition-all pointer-events-none z-50 text-center shadow-lg">
-                              <div className="font-normal">{av.name}</div>
-                              <div className="text-background/70">{av.email}</div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      <span className="text-sm text-muted-foreground whitespace-nowrap">{chat.date}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
+          {projectSubTab === "your" && renderProjectCards([{
+            id: 99,
+            name: "Personal Project",
+            description: "Your personal project workspace.",
+            updatedAt: "Updated 37 minutes ago",
+          }].filter(p => p.name.toLowerCase().includes(projectSearchQuery.toLowerCase())))}
           {projectSubTab === "team" && renderProjectCards(projectSearchFiltered)}
-          {projectSubTab === "shared" && (
-            <>
-              <div className="mb-4">
-                <h3 className="text-sm font-medium text-foreground mb-1">Project shared with me</h3>
-                <span className="text-xs text-muted-foreground">A project shared with you by a team member</span>
-              </div>
-              <div className="divide-y divide-border">
-                {[
-                  { title: "Onboarding flow review", subtitle: "Let's go through the steps together", date: "Apr 8", avatars: [{ initials: "AT", bg: "bg-amber-700", name: "Alessandro Tunzi", email: "alessandro@rubylabs.com" }, { initials: "PR", bg: "bg-purple-600", name: "Paolo Rossi", email: "paolo@rubylabs.com" }] },
-                  { title: "Dashboard metrics", subtitle: "Here are the KPIs we discussed", date: "Apr 6", avatars: [{ initials: "AT", bg: "bg-amber-700", name: "Alessandro Tunzi", email: "alessandro@rubylabs.com" }, { initials: "SC", bg: "bg-teal-600", name: "Sofia Conti", email: "sofia@rubylabs.com" }] },
-                  { title: "Brand guidelines update", subtitle: "I've prepared the new color palette", date: "Apr 4", avatars: [{ initials: "AT", bg: "bg-amber-700", name: "Alessandro Tunzi", email: "alessandro@rubylabs.com" }, { initials: "MB", bg: "bg-indigo-600", name: "Marco Bianchi", email: "marco@rubylabs.com" }] },
-                ].filter(c => c.title.toLowerCase().includes(projectSearchQuery.toLowerCase())).map((chat) => (
-                  <div key={chat.title} className="flex items-center justify-between py-5 cursor-pointer hover:bg-accent/30 transition-colors -mx-2 px-2 rounded-md" onClick={() => setActiveTeamChat({ title: chat.title, messages: [{ role: "user", content: chat.title }, { role: "assistant", content: chat.subtitle }], avatars: chat.avatars })}>
-                    <div>
-                      <h3 className="text-sm font-medium text-foreground">{chat.title}</h3>
-                      <p className="text-sm text-muted-foreground mt-0.5">{chat.subtitle}</p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="flex">
-                        {chat.avatars.map((av, i) => (
-                          <div key={i} className={`w-8 h-8 rounded-full ${av.bg} flex items-center justify-center text-[11px] font-medium text-white ring-2 ring-background group/avatar relative`} style={{ marginLeft: i > 0 ? '-13px' : '0', zIndex: chat.avatars.length - i }}>
-                            {av.initials}
-                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 rounded-lg bg-foreground text-background text-xs whitespace-nowrap opacity-0 invisible group-hover/avatar:opacity-100 group-hover/avatar:visible transition-all pointer-events-none z-50 text-center shadow-lg">
-                              <div className="font-normal">{av.name}</div>
-                              <div className="text-background/70">{av.email}</div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      <span className="text-sm text-muted-foreground whitespace-nowrap">{chat.date}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
+          {projectSubTab === "shared" && renderProjectCards([{
+            id: 98,
+            name: "Project shared with me",
+            description: "A project shared with you by a team member.",
+            updatedAt: "Updated 22 hours ago",
+          }].filter(p => p.name.toLowerCase().includes(projectSearchQuery.toLowerCase())))}
         </>
       ) : (
         <>
