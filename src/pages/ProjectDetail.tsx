@@ -93,6 +93,8 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
   const fromTab = searchParams.get("from");
   const project = projectsData[id || ""] || { name: "Project", description: "", chats: [] };
 
+  const isSharedInNextVersion = basePath === "/team-feature-next-version" && id === "98";
+
   const fromLabel = fromTab === "your" ? "Your projects" : fromTab === "shared" ? "Shared with you" : fromTab === "team" ? "Team" : null;
 
   const [inputValue, setInputValue] = useState("");
@@ -346,7 +348,7 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
               {getProjectIcon(id || "", 28, "text-foreground")}
               <h1 className="text-2xl font-normal text-foreground">{project.name}</h1>
             </div>
-            {!hideSettings && (
+            {!hideSettings && !isSharedInNextVersion && (
               <button
                 onClick={() => setSettingsOpen(true)}
                 className="px-4 py-2 rounded-lg border border-border text-sm text-foreground hover:bg-accent transition-colors"
@@ -402,6 +404,7 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
                         </div>
                       ))}
                     </div>
+                    {!isSharedInNextVersion && (
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -411,6 +414,7 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
                     >
                       <MoreHorizontal size={18} />
                     </button>
+                    )}
                     <span className="text-xs text-muted-foreground shrink-0">{["Apr 5", "Apr 3", "Mar 28", "Mar 25", "Mar 19", "Mar 14", "Mar 10", "Mar 5", "Feb 27", "Feb 20"][i] || "Mar 19"}</span>
                     {chatMenu === chat.name && (
                       <>
