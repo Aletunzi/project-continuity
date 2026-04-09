@@ -12,6 +12,7 @@ import InvoiceDetail from "./pages/InvoiceDetail.tsx";
 import TeamFeature from "./pages/TeamFeature.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import NewTeam from "./pages/NewTeam.tsx";
+import MemberView from "./pages/MemberView.tsx";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,10 @@ const App = () => (
           <Route path="/new-team/teams" element={<NewTeam />} />
           <Route path="/new-team/project/:id" element={<NewTeam />} />
           <Route path="/new-team/my-organization" element={<NewTeam />} />
+          <Route path="/member-view" element={<MemberView />} />
+          <Route path="/member-view/teams" element={<MemberView />} />
+          <Route path="/member-view/project/:id" element={<MemberView />} />
+          <Route path="/member-view/my-organization" element={<MemberView />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
