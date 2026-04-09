@@ -228,48 +228,52 @@ const Sidebar = ({ showTeams = true, showInvite = true, showOrg = true, basePath
               style={{ top: chatMenuPos.top, left: chatMenuPos.left }}
               onClick={(e) => e.stopPropagation()}
             >
-              <button
-                onClick={() => setChatMenuOpen(null)}
-                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-foreground hover:bg-accent transition-colors"
-              >
-                <Pencil size={16} />
-                Rename
-              </button>
-              <div
-                className="relative"
-                onMouseEnter={() => setChatMoveSubmenu(chatMenuOpen)}
-                onMouseLeave={() => setChatMoveSubmenu(null)}
-              >
-                <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-foreground hover:bg-accent transition-colors">
-                  <FolderOpen size={16} />
-                  <span className="flex-1 text-left">Move to project</span>
-                  <ChevronRight size={14} className="text-muted-foreground" />
-                </button>
-                {chatMoveSubmenu === chatMenuOpen && (
-                  <div className="absolute left-full top-0 ml-1 bg-background border border-border rounded-2xl shadow-lg py-3 z-50 min-w-[180px]">
-                    <button
-                      onClick={() => { setChatMenuOpen(null); setChatMoveSubmenu(null); }}
-                      className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-foreground hover:bg-accent transition-colors"
-                    >
-                      <Plus size={16} />
-                      New project
+              {!chatMenuOpen.startsWith('teamchat-') && (
+                <>
+                  <button
+                    onClick={() => setChatMenuOpen(null)}
+                    className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-foreground hover:bg-accent transition-colors"
+                  >
+                    <Pencil size={16} />
+                    Rename
+                  </button>
+                  <div
+                    className="relative"
+                    onMouseEnter={() => setChatMoveSubmenu(chatMenuOpen)}
+                    onMouseLeave={() => setChatMoveSubmenu(null)}
+                  >
+                    <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-foreground hover:bg-accent transition-colors">
+                      <FolderOpen size={16} />
+                      <span className="flex-1 text-left">Move to project</span>
+                      <ChevronRight size={14} className="text-muted-foreground" />
                     </button>
-                    <div className="border-t border-border my-1" />
-                    {projects
-                      .filter((p) => !chatMenuOpen.startsWith(p.id))
-                      .map((p) => (
+                    {chatMoveSubmenu === chatMenuOpen && (
+                      <div className="absolute left-full top-0 ml-1 bg-background border border-border rounded-2xl shadow-lg py-3 z-50 min-w-[180px]">
                         <button
-                          key={p.id}
                           onClick={() => { setChatMenuOpen(null); setChatMoveSubmenu(null); }}
                           className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-foreground hover:bg-accent transition-colors"
                         >
-                          <FolderOpen size={16} className="text-muted-foreground" />
-                          {p.name}
+                          <Plus size={16} />
+                          New project
                         </button>
-                      ))}
+                        <div className="border-t border-border my-1" />
+                        {projects
+                          .filter((p) => !chatMenuOpen.startsWith(p.id))
+                          .map((p) => (
+                            <button
+                              key={p.id}
+                              onClick={() => { setChatMenuOpen(null); setChatMoveSubmenu(null); }}
+                              className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-foreground hover:bg-accent transition-colors"
+                            >
+                              <FolderOpen size={16} className="text-muted-foreground" />
+                              {p.name}
+                            </button>
+                          ))}
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
+                </>
+              )}
               {!hideDelete && (
                 <button
                   onClick={() => setChatMenuOpen(null)}
