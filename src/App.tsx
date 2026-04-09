@@ -4,7 +4,14 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
+import Teams from "./pages/Teams.tsx";
+import Onboarding from "./pages/Onboarding.tsx";
+import ProjectDetail from "./pages/ProjectDetail.tsx";
+import IndividualAccount from "./pages/IndividualAccount.tsx";
+import InvoiceDetail from "./pages/InvoiceDetail.tsx";
+import TeamFeature from "./pages/TeamFeature.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import NewTeam from "./pages/NewTeam.tsx";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +23,20 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/team-feature" element={<Index />} />
+          <Route path="/team-feature/teams" element={<Index />} />
+          <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/individual-account" element={<IndividualAccount />} />
+          <Route path="/project/:id" element={<Index />} />
+          <Route path="/invoice/:invoiceIndex" element={<InvoiceDetail />} />
+          <Route path="/team-feature" element={<TeamFeature />} />
+          <Route path="/team-feature/teams" element={<TeamFeature />} />
+          <Route path="/team-feature/project/:id" element={<TeamFeature />} />
+          <Route path="/team-feature/my-organization" element={<TeamFeature />} />
+          <Route path="/new-team" element={<NewTeam />} />
+          <Route path="/new-team/teams" element={<NewTeam />} />
+          <Route path="/new-team/project/:id" element={<NewTeam />} />
+          <Route path="/new-team/my-organization" element={<NewTeam />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
