@@ -184,6 +184,7 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
               <Copy size={15} />
               Copy chat
             </button>
+            {id !== "99" && (
             <div className="flex -space-x-2">
               {members.map((m) => (
                 <div key={m.initials} className="relative group z-10 hover:z-20">
@@ -195,6 +196,7 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
                 </div>
               ))}
             </div>
+            )}
           </div>
         </div>
         {/* Breadcrumb */}
