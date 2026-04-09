@@ -38,6 +38,24 @@ const projectsData: Record<string, { name: string; description: string; chats: C
     ],
   },
   "2": { name: "Project Empty", description: "Dolor sit amet consectetur adipiscing elit.", chats: [] },
+  "99": {
+    name: "Personal Project",
+    description: "Your personal project workspace.",
+    chats: [
+      { name: "Landing page redesign", participants: [allMembers[2]] },
+      { name: "API integration notes", participants: [allMembers[2]] },
+      { name: "Bug fix tracker", participants: [allMembers[2]] },
+    ],
+  },
+  "98": {
+    name: "Project shared with me",
+    description: "A project shared with you by a team member.",
+    chats: [
+      { name: "Onboarding flow review", participants: [allMembers[2], allMembers[1]] },
+      { name: "Dashboard metrics", participants: [allMembers[2], allMembers[4]] },
+      { name: "Brand guidelines update", participants: [allMembers[2], allMembers[3]] },
+    ],
+  },
 };
 
 type Message = { role: "user" | "assistant"; content: string };
