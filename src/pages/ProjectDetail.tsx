@@ -89,7 +89,11 @@ type Chat = { name: string; messages: Message[]; participants: ChatParticipant[]
 const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideDelete = false }: { basePath?: string; hideSettings?: boolean; hideDelete?: boolean }) => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const fromTab = searchParams.get("from");
   const project = projectsData[id || ""] || { name: "Project", description: "", chats: [] };
+
+  const fromLabel = fromTab === "your" ? "Your project" : fromTab === "shared" ? "Shared with you" : fromTab === "team" ? "Team" : null;
 
   const [inputValue, setInputValue] = useState("");
   const [activeChat, setActiveChat] = useState<Chat | null>(null);
