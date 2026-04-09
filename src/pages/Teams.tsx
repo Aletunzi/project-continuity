@@ -900,17 +900,19 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
               <Copy size={15} />
               Copy chat
             </button>
-            <div className="flex -space-x-2">
-              {activeTeamChat.avatars.map((av, i) => (
-                <div key={i} className="relative group z-10 hover:z-20">
-                  <div className={`w-7 h-7 rounded-full ${av.bg} flex items-center justify-center text-[10px] text-white ring-2 ring-background cursor-pointer`}>{av.initials}</div>
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-2 rounded-lg bg-foreground text-background text-xs whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all pointer-events-none z-50 text-center shadow-lg">
-                    <div className="font-normal">{av.name}</div>
-                    <div className="text-background/70">{av.email}</div>
+            {chatSubTab !== "your" && (
+              <div className="flex -space-x-2">
+                {activeTeamChat.avatars.map((av, i) => (
+                  <div key={i} className="relative group z-10 hover:z-20">
+                    <div className={`w-7 h-7 rounded-full ${av.bg} flex items-center justify-center text-[10px] text-white ring-2 ring-background cursor-pointer`}>{av.initials}</div>
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-2 rounded-lg bg-foreground text-background text-xs whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all pointer-events-none z-50 text-center shadow-lg">
+                      <div className="font-normal">{av.name}</div>
+                      <div className="text-background/70">{av.email}</div>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
         {/* Breadcrumb */}
@@ -1080,7 +1082,7 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
 
                 {/* Chat list per sub-tab */}
                 {(() => {
-                  const chatItems = [
+                  const allChatItems = [
                     { title: "Q4 Strategy alignment", subtitle: "Hi! How can I help you with this?", date: "Apr 5", avatars: [
                       { initials: "AT", bg: "bg-amber-700", name: "Alessandro Tunzi", email: "alessandro@rubylabs.com" },
                       { initials: "R", bg: "bg-green-600", name: "Paolo Rossi", email: "paolo@rubylabs.com" },
@@ -1094,6 +1096,10 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
                       { initials: "R", bg: "bg-blue-500", name: "Paolo Rossi", email: "paolo@rubylabs.com" },
                     ] },
                   ].filter(c => c.title.toLowerCase().includes(chatSearchQuery.toLowerCase()));
+
+                  const chatItems = chatSubTab === "your"
+                    ? allChatItems.map(c => ({ ...c, avatars: [c.avatars[0]] }))
+                    : allChatItems;
 
                   return (
                     <div>
