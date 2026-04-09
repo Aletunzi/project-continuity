@@ -338,12 +338,12 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
                         {chat.messages[chat.messages.length - 1]?.content || ""}
                       </p>
                     </div>
-                    <div className="relative shrink-0 flex items-center" style={{ width: `${members.length * 14 + 14}px` }}>
-                      {members.map((m, mi) => (
+                    <div className="relative shrink-0 flex items-center" style={{ width: `${chat.participants.length * 14 + 14}px` }}>
+                      {chat.participants.map((m, mi) => (
                         <div
                           key={mi}
                           className={`w-7 h-7 rounded-full ${m.bg} flex items-center justify-center text-[9px] ${m.text} ring-2 ring-background absolute group/avatar`}
-                          style={{ left: `${mi * 14}px`, zIndex: members.length - mi }}
+                          style={{ left: `${mi * 14}px`, zIndex: chat.participants.length - mi }}
                         >
                           {m.initials}
                           <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 rounded-lg bg-foreground text-background text-xs whitespace-nowrap opacity-0 invisible group-hover/avatar:opacity-100 group-hover/avatar:visible transition-all pointer-events-none z-50 text-center shadow-lg">
