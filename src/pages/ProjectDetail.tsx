@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowLeft, ArrowUp, MoreHorizontal, MoreVertical, Plus, ChevronDown, ChevronRight, Copy, ThumbsUp, ThumbsDown, RotateCcw, Share2, Pencil, FolderMinus, Archive, Flag, Trash2, X, Settings, SmilePlus, FileText, AudioLines, Mic, FolderOpen } from "lucide-react";
 
 const PersonalFolderIcon = ({ size = 28, className = "" }: { size?: number; className?: string }) => (
@@ -89,7 +89,11 @@ type Chat = { name: string; messages: Message[]; participants: ChatParticipant[]
 const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideDelete = false }: { basePath?: string; hideSettings?: boolean; hideDelete?: boolean }) => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const fromTab = searchParams.get("from");
   const project = projectsData[id || ""] || { name: "Project", description: "", chats: [] };
+
+  const fromLabel = fromTab === "your" ? "Your project" : fromTab === "shared" ? "Shared with you" : fromTab === "team" ? "Team" : null;
 
   const [inputValue, setInputValue] = useState("");
   const [activeChat, setActiveChat] = useState<Chat | null>(null);
@@ -310,6 +314,14 @@ const ProjectDetail = ({ basePath = "/team-feature", hideSettings = false, hideD
           <button onClick={() => navigate(`${basePath}/teams`)} className="text-muted-foreground hover:text-foreground hover:underline transition-colors">
             Team
           </button>
+          {fromLabel && (
+            <>
+              <span className="text-muted-foreground">/</span>
+              <button onClick={() => navigate(`${basePath}/teams`)} className="text-muted-foreground hover:text-foreground hover:underline transition-colors">
+                {fromLabel}
+              </button>
+            </>
+          )}
           <span className="text-muted-foreground">/</span>
           <span>{project.name}</span>
         </div>
