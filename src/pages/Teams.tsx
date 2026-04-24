@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, ChevronDown, Plus, Building2, Lock, X, Info, Download, MoreHorizontal, Copy, CreditCard, ArrowUp, ThumbsUp, ThumbsDown, AudioLines } from "lucide-react";
 
@@ -58,6 +58,23 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviteRole, setInviteRole] = useState("Member");
   const [inviteTier, setInviteTier] = useState("Standard");
+  const [activeSeats, setActiveSeats] = useState<number>(() => {
+    const stored = typeof window !== "undefined" ? localStorage.getItem("activeSeats") : null;
+    return stored ? parseInt(stored, 10) : 5;
+  });
+  useEffect(() => {
+    const handler = () => {
+      const stored = localStorage.getItem("activeSeats");
+      if (stored) setActiveSeats(parseInt(stored, 10));
+    };
+    window.addEventListener("storage", handler);
+    window.addEventListener("activeSeatsChanged", handler);
+    return () => {
+      window.removeEventListener("storage", handler);
+      window.removeEventListener("activeSeatsChanged", handler);
+    };
+  }, []);
+  const seatsFull = membersData.length >= activeSeats;
   const [memberBreakdownOpen, setMemberBreakdownOpen] = useState(false);
   const [seatBreakdownOpen, setSeatBreakdownOpen] = useState(false);
   const [changeSeatsOpen, setChangeSeatsOpen] = useState(false);
