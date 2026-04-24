@@ -587,8 +587,14 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
               Export CSV
             </button>
             <button
-              onClick={() => setAddMemberOpen(true)}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-foreground text-background text-sm font-normal hover:opacity-90 transition-opacity"
+              onClick={() => !seatsFull && setAddMemberOpen(true)}
+              disabled={seatsFull}
+              title={seatsFull ? "All seats are assigned. Increase seats in My organization to add more members." : undefined}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-normal transition-opacity ${
+                seatsFull
+                  ? "bg-muted text-muted-foreground cursor-not-allowed"
+                  : "bg-foreground text-background hover:opacity-90"
+              }`}
             >
               Add member
             </button>
