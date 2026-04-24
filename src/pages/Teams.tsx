@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, ChevronDown, Plus, Building2, Lock, X, Info, Download, MoreHorizontal, Copy, CreditCard, ArrowUp, ThumbsUp, ThumbsDown, AudioLines } from "lucide-react";
 
@@ -58,6 +58,23 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviteRole, setInviteRole] = useState("Member");
   const [inviteTier, setInviteTier] = useState("Standard");
+  const [activeSeats, setActiveSeats] = useState<number>(() => {
+    const stored = typeof window !== "undefined" ? localStorage.getItem("activeSeats") : null;
+    return stored ? parseInt(stored, 10) : 5;
+  });
+  useEffect(() => {
+    const handler = () => {
+      const stored = localStorage.getItem("activeSeats");
+      if (stored) setActiveSeats(parseInt(stored, 10));
+    };
+    window.addEventListener("storage", handler);
+    window.addEventListener("activeSeatsChanged", handler);
+    return () => {
+      window.removeEventListener("storage", handler);
+      window.removeEventListener("activeSeatsChanged", handler);
+    };
+  }, []);
+  const seatsFull = membersData.length >= activeSeats;
   const [memberBreakdownOpen, setMemberBreakdownOpen] = useState(false);
   const [seatBreakdownOpen, setSeatBreakdownOpen] = useState(false);
   const [changeSeatsOpen, setChangeSeatsOpen] = useState(false);
@@ -570,8 +587,14 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
               Export CSV
             </button>
             <button
-              onClick={() => setAddMemberOpen(true)}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-foreground text-background text-sm font-normal hover:opacity-90 transition-opacity"
+              onClick={() => !seatsFull && setAddMemberOpen(true)}
+              disabled={seatsFull}
+              title={seatsFull ? "All seats are assigned. Increase seats in My organization to add more members." : undefined}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-normal transition-opacity ${
+                seatsFull
+                  ? "bg-muted text-muted-foreground cursor-not-allowed"
+                  : "bg-foreground text-background hover:opacity-90"
+              }`}
             >
               Add member
             </button>
@@ -1304,8 +1327,14 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
             {!hideAddMember && (
               <div className="flex items-center justify-end mb-4">
                 <button
-                  onClick={() => setAddMemberOpen(true)}
-                  className="px-5 py-2 rounded-full border border-border bg-background text-foreground text-sm font-normal hover:bg-accent transition-colors"
+                  onClick={() => !seatsFull && setAddMemberOpen(true)}
+                  disabled={seatsFull}
+                  title={seatsFull ? "All seats are assigned. Increase seats in My organization to add more members." : undefined}
+                  className={`px-5 py-2 rounded-full border text-sm font-normal transition-colors ${
+                    seatsFull
+                      ? "border-border bg-muted text-muted-foreground cursor-not-allowed"
+                      : "border-border bg-background text-foreground hover:bg-accent"
+                  }`}
                 >
                   Add
                 </button>

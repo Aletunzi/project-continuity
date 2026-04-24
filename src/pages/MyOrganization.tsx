@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Pencil, Minus, Plus, CreditCard, ArrowLeft } from "lucide-react";
 import {
@@ -34,7 +34,14 @@ const MyOrganization = ({ basePath = "/team-feature" }: MyOrganizationProps) => 
   const [orgDescription, setOrgDescription] = useState(
     "Use AI will search your org's connected tools to find exactly what you need and give you the best answer."
   );
-  const [activeSeats, setActiveSeats] = useState(5);
+  const [activeSeats, setActiveSeats] = useState<number>(() => {
+    const stored = typeof window !== "undefined" ? localStorage.getItem("activeSeats") : null;
+    return stored ? parseInt(stored, 10) : 5;
+  });
+  useEffect(() => {
+    localStorage.setItem("activeSeats", String(activeSeats));
+    window.dispatchEvent(new Event("activeSeatsChanged"));
+  }, [activeSeats]);
   const [showSeatsModal, setShowSeatsModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [draftSeats, setDraftSeats] = useState(5);
