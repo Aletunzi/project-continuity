@@ -1327,8 +1327,14 @@ const Teams = ({ basePath = "/team-feature", hideProjects = false, hideAddProjec
             {!hideAddMember && (
               <div className="flex items-center justify-end mb-4">
                 <button
-                  onClick={() => setAddMemberOpen(true)}
-                  className="px-5 py-2 rounded-full border border-border bg-background text-foreground text-sm font-normal hover:bg-accent transition-colors"
+                  onClick={() => !seatsFull && setAddMemberOpen(true)}
+                  disabled={seatsFull}
+                  title={seatsFull ? "All seats are assigned. Increase seats in My organization to add more members." : undefined}
+                  className={`px-5 py-2 rounded-full border text-sm font-normal transition-colors ${
+                    seatsFull
+                      ? "border-border bg-muted text-muted-foreground cursor-not-allowed"
+                      : "border-border bg-background text-foreground hover:bg-accent"
+                  }`}
                 >
                   Add
                 </button>
