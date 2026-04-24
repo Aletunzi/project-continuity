@@ -137,7 +137,8 @@ const NewTeam = () => {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setMemberCount(Math.max(2, memberCount - 1))}
-                  className="w-7 h-7 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                  disabled={memberCount <= 2}
+                  className="w-7 h-7 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors disabled:opacity-30 disabled:hover:text-muted-foreground disabled:cursor-not-allowed"
                 >
                   <Minus size={14} />
                 </button>
