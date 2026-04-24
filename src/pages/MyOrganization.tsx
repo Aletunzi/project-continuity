@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Pencil, Minus, Plus } from "lucide-react";
+import { Pencil, Minus, Plus, CreditCard, ArrowLeft } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -36,7 +36,7 @@ const MyOrganization = ({ basePath = "/team-feature" }: MyOrganizationProps) => 
   );
   const [activeSeats, setActiveSeats] = useState(5);
   const [showSeatsModal, setShowSeatsModal] = useState(false);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [draftSeats, setDraftSeats] = useState(5);
 
   const openSeatsModal = () => {
@@ -56,12 +56,17 @@ const MyOrganization = ({ basePath = "/team-feature" }: MyOrganizationProps) => 
       return;
     }
     setShowSeatsModal(false);
-    setShowConfirmModal(true);
+    setShowPaymentModal(true);
   };
 
-  const handleConfirmSeats = () => {
+  const handleConfirmPayment = () => {
     setActiveSeats(draftSeats);
-    setShowConfirmModal(false);
+    setShowPaymentModal(false);
+  };
+
+  const handleBackToSeats = () => {
+    setShowPaymentModal(false);
+    setShowSeatsModal(true);
   };
 
   return (
