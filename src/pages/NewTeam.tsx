@@ -29,7 +29,7 @@ const NewTeam = () => {
   const [orgDescription, setOrgDescription] = useState(
     "Use AI will search your team's connected tools to find exactly what you need and give you the best answer."
   );
-  const [memberCount, setMemberCount] = useState(1);
+  const [memberCount, setMemberCount] = useState(2);
 
   const handleCreateTeam = () => {
     setShowWelcome(false);
@@ -136,7 +136,7 @@ const NewTeam = () => {
               <label className="text-sm font-normal text-muted-foreground">Members:</label>
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => setMemberCount(Math.max(1, memberCount - 1))}
+                  onClick={() => setMemberCount(Math.max(2, memberCount - 1))}
                   className="w-7 h-7 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <Minus size={14} />
