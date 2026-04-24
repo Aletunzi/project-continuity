@@ -2,12 +2,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const invoices = [
-  { date: "Mar 13, 2026", members: 5, total: "$125.00", status: "Paid" },
-  { date: "Feb 13, 2026", members: 5, total: "$125.00", status: "Paid" },
-  { date: "Jan 13, 2026", members: 4, total: "$100.00", status: "Paid" },
-  { date: "Dec 13, 2025", members: 4, total: "$100.00", status: "Paid" },
-  { date: "Nov 13, 2025", members: 3, total: "$75.00", status: "Paid" },
-  { date: "Oct 13, 2025", members: 3, total: "$75.00", status: "Paid" },
+  { date: "Mar 13, 2026", members: 5, total: "€149.95", status: "Paid" },
+  { date: "Feb 13, 2026", members: 5, total: "€149.95", status: "Paid" },
+  { date: "Jan 28, 2026", members: 1, total: "€14.99", status: "Paid" },
+  { date: "Jan 13, 2026", members: 4, total: "€119.96", status: "Paid" },
+  { date: "Dec 13, 2025", members: 4, total: "€119.96", status: "Paid" },
+  { date: "Nov 24, 2025", members: 1, total: "€10.99", status: "Paid" },
+  { date: "Nov 13, 2025", members: 3, total: "€89.97", status: "Paid" },
+  { date: "Oct 13, 2025", members: 3, total: "€89.97", status: "Paid" },
 ];
 
 interface MyOrganizationProps {
@@ -67,7 +69,7 @@ const MyOrganization = ({ basePath = "/team-feature" }: MyOrganizationProps) => 
             </div>
             <div>
               <p className="text-xs text-muted-foreground mb-1">Projected total</p>
-              <p className="text-sm font-normal text-foreground">$125.00</p>
+              <p className="text-sm font-normal text-foreground">€149.95</p>
             </div>
           </div>
         </div>
