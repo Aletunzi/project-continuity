@@ -102,7 +102,16 @@ const MyOrganization = ({ basePath = "/team-feature" }: MyOrganizationProps) => 
             </div>
             <div>
               <p className="text-xs text-muted-foreground mb-1">Active seats</p>
-              <p className="text-sm font-normal text-foreground">5</p>
+              <div className="flex items-center gap-2">
+                <p className="text-sm font-normal text-foreground">{activeSeats}</p>
+                <button
+                  onClick={openSeatsModal}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Edit active seats"
+                >
+                  <Pencil size={12} />
+                </button>
+              </div>
             </div>
             <div>
               <p className="text-xs text-muted-foreground mb-1">Next invoice</p>
@@ -110,7 +119,7 @@ const MyOrganization = ({ basePath = "/team-feature" }: MyOrganizationProps) => 
             </div>
             <div>
               <p className="text-xs text-muted-foreground mb-1">Projected total</p>
-              <p className="text-sm font-normal text-foreground">€149.95</p>
+              <p className="text-sm font-normal text-foreground">€{(activeSeats * PRICE_PER_SEAT).toFixed(2)}</p>
             </div>
           </div>
         </div>
