@@ -1,5 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Pencil, Minus, Plus } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
+
+const PRICE_PER_SEAT = 29.99;
+const ASSIGNED_MEMBERS = 5;
 
 const invoices = [
   { date: "Mar 13, 2026", members: 5, total: "€149.95", status: "Paid" },
@@ -22,6 +34,35 @@ const MyOrganization = ({ basePath = "/team-feature" }: MyOrganizationProps) => 
   const [orgDescription, setOrgDescription] = useState(
     "Use AI will search your org's connected tools to find exactly what you need and give you the best answer."
   );
+  const [activeSeats, setActiveSeats] = useState(5);
+  const [showSeatsModal, setShowSeatsModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [draftSeats, setDraftSeats] = useState(5);
+
+  const openSeatsModal = () => {
+    setDraftSeats(activeSeats);
+    setShowSeatsModal(true);
+  };
+
+  const minSeats = ASSIGNED_MEMBERS;
+  const cannotReduce = draftSeats <= minSeats;
+  const newMonthlyTotal = draftSeats * PRICE_PER_SEAT;
+  const currentMonthlyTotal = activeSeats * PRICE_PER_SEAT;
+  const diff = newMonthlyTotal - currentMonthlyTotal;
+
+  const handleSaveSeats = () => {
+    if (draftSeats === activeSeats) {
+      setShowSeatsModal(false);
+      return;
+    }
+    setShowSeatsModal(false);
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirmSeats = () => {
+    setActiveSeats(draftSeats);
+    setShowConfirmModal(false);
+  };
 
   return (
     <div className="flex-1 overflow-y-auto">
