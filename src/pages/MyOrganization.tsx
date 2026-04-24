@@ -170,7 +170,7 @@ const MyOrganization = ({ basePath = "/team-feature" }: MyOrganizationProps) => 
       <Dialog open={showSeatsModal} onOpenChange={setShowSeatsModal}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-xl font-normal">Manage active seats</DialogTitle>
+            <DialogTitle className="text-xl font-normal">Manage seats</DialogTitle>
             <DialogDescription>
               Adjust the number of seats for your organization.
             </DialogDescription>
